@@ -1,0 +1,7 @@
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace ingress-nginx --create-namespace
+
+kubectl create ns sound-repeater
+kubectl create deployment echo-deployment --image=httpd --port=80 -n sound-repeater
+kubectl expose deployment echo-deployment --name=echoserver-service  -n sound-repeater --port=8080 --target-port=80 --type=ClusterIP
